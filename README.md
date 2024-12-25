@@ -1,7 +1,6 @@
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=700&size=25&duration=2000&pause=1000&center=true&width=900&lines=Awesome+GitHub+Profiles)](https://git.io/typing-svg)
 
-<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 📊 Project Metrics
 
@@ -27,10 +26,6 @@
 </table>
 
 
-<h2 align="center">awesome-github-profiles</h2>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
 <div align="center">
@@ -49,46 +44,19 @@
 <!--Line-->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900"> 
 
-<h2>Open-Source-Programmes⭐</h2>
+<!-- BEFORE-GETTING-STARTED: START -->
+<h2>Before Getting Started⭐</h2>
 
-<!-- Added Hacktoberfest 2024 and GSSoC Extended 2024 banners -->
-### This project is now OFFICIALLY accepted for
-
-<table>
-
-   <tr>
-      <th>Event Logo</th>
-      <th>Event Name</th>
-      <th>Event Description</th>
-   </tr>
-   <tr>
-      <td><img src="https://github.com/Annapoornaaradhya/Canvas-Editor/blob/readme/gssocextd.jpg" width="200" height="auto" loading="lazy" alt="GSSoC 24"/></td>
-      <td>GirlScript Summer of Code 2024</td>
-      <td>GirlScript Summer of Code is a three-month-long Open Source Program conducted every summer by GirlScript Foundation. It is an initiative to bring more beginners to Open-Source Software Development.</td>
-   </tr>
-    <tr>
-      <td><img src="https://github.com/Annapoornaaradhya/Canvas-Editor/blob/readme/hacktoberfest.png" width="200" height="auto" loading="lazy" alt="Hacktoberfest 2024"/></td>
-      <td>Hacktoberfest 2024</td>
-      <td>Hacktoberfest is a month-long celebration of open source software run by DigitalOcean, GitHub, and Twilio. It encourages contributions to open source projects and promotes a global community of developers.</td>
-   </tr>
-
-</table>
 <br/>
 <!--Line-->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900">
 
 ## Screenshots of Features ✨
-### Home Page (Light Mode):
+### Home Page :
 ![image](https://github.com/user-attachments/assets/f8408ac2-ad5c-42c6-af1f-ea2dd635b77f)
-
-### Home Page (Dark Mode):
-![image](https://github.com/user-attachments/assets/8860b8e3-c40d-4296-89f3-19fd3b069839)
 
 ### Login Page:
 ![image](https://github.com/user-attachments/assets/c8829b33-16d5-4628-b665-b8fb1dec2701)
-
-### Signup Page:
-![image](https://github.com/user-attachments/assets/17b6bad6-ae3f-4a08-be0f-6863458f0a8e)
 
 ### Events Timeline:
 ![image](https://github.com/user-attachments/assets/5dab494f-adec-4d9a-8108-0353e5436acf)
@@ -167,7 +135,7 @@ Forking allows you to create a personal copy of the repository, where you can ex
 
 - Use the command below to clone your fork to your local machine:
   ```bash
-  git clone https://github.com/YOUR_USERNAME/awesome-github-profiles.git
+  git clone https://github.com/recodehive/awesome-github-profiles.git
   ```
 
 <h2 id="tutorials">Tutorials</h2>
