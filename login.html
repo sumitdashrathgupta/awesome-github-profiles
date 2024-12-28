@@ -16,11 +16,11 @@
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Username" required />
             </div>
             <div class="input-field">
               <i class="fas fa-lock toggle-password" id="toggle-password"></i>
-              <input type="password" id="password-input" placeholder="Password" required/>
+              <input type="password" id="password-input" placeholder="Password" required />
             </div>
             <div class="remember-me">
               <input type="checkbox" id="remember-me" />
@@ -39,7 +39,7 @@
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Username" required />
             </div>
             <div class="input-field">
               <i class="fas fa-code-branch"></i>
@@ -47,15 +47,15 @@
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" required />
             </div>
             <div class="input-field">
-              <i class="fas fa-lock toggle-password" id="toggle-password"></i>
-              <input type="password" id="password-input" placeholder="Password" minlength="8" />
+              <i class="fas fa-lock toggle-password" id="toggle-password-signup"></i>
+              <input type="password" id="password-input-signup" placeholder="Password" minlength="8" required />
             </div>
             <div class="remember-me">
-              <input type="checkbox" id="remember-me" />
-              <label for="remember-me">Remember Me</label>
+              <input type="checkbox" id="remember-me-signup" />
+              <label for="remember-me-signup">Remember Me</label>
             </div>
             <input type="submit" class="btn" value="Sign up" />
             <p class="social-text">Or Sign up with social platforms</p>
@@ -76,19 +76,18 @@
         </a>
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
+            <h3>New here?</h3>
             <p>
-              Discover new experiences and profiles with awesome-github-profiles <br>Get access to exclusive content and features. <br> Create your account.
+              Discover new experiences and profiles with awesome-github-profiles. Get access to exclusive content and features. Create your account.
             </p>
             <button class="btn transparent" id="sign-up-btn">
               Sign up
             </button>
           </div>
-          <img src="img/log.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>One of us ?</h3>
+            <h3>One of us?</h3>
             <p>
               Welcome to our community
             </p>
@@ -100,6 +99,24 @@
         </div>
       </div>
     </div>
+
     <script src="login.js"></script>
+    <script>
+      document.getElementById('toggle-password').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password-input');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      document.getElementById('toggle-password-signup').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password-input-signup');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    </script>
   </body>
 </html>
