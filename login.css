@@ -45,7 +45,7 @@ form {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0rem 5rem;
+  padding: 0 5rem;
   transition: all 0.2s 0.7s;
   overflow: hidden;
   grid-column: 1 / 2;
@@ -61,11 +61,28 @@ form.sign-in-form {
   z-index: 2;
 }
 
-.github-login{
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  color: #333;
+}
+
+.remember-me input {
+  margin-right: 5px;
+}
+
+.github-login {
   cursor: pointer;
   background-color: transparent;
   border: none;
   outline: none;
+  padding: 5px;
+  transition: transform 0.3s ease;
+}
+
+.github-login:hover {
+  transform: scale(1.1);
 }
 
 .title {
@@ -96,7 +113,6 @@ form.sign-in-form {
 }
 
 .input-field input {
-  
   background: none;
   outline: none;
   border: none;
@@ -109,9 +125,8 @@ form.sign-in-form {
 .input-field input::placeholder {
   color: #aaa;
   font-weight: 500;
-  padding-right: 2.5rem;
-  
 }
+
 .social-text {
   padding: 0.7rem 0;
   font-size: 1rem;
@@ -120,26 +135,6 @@ form.sign-in-form {
 .social-media {
   display: flex;
   justify-content: center;
-}
-
-.social-icon {
-  height: 46px;
-  width: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0.45rem;
-  color: #333;
-  /* border-radius: 50%;
-  border: 1px solid #333; */
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: 0.3s;
-}
-
-.social-icon:hover {
-  color: #0b3174;
-  border-color: #000000;
 }
 
 .btn {
@@ -160,6 +155,7 @@ form.sign-in-form {
 .btn:hover {
   background-color: #161618;
 }
+
 .panels-container {
   position: absolute;
   height: 100%;
@@ -193,6 +189,7 @@ form.sign-in-form {
 .panel {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   justify-content: space-around;
   text-align: center;
   z-index: 6;
@@ -200,7 +197,7 @@ form.sign-in-form {
 
 .left-panel {
   pointer-events: all;
-  padding: 4rem 17% 2rem 12%;
+  padding: 3rem 17% 2rem 12%;
 }
 
 .right-panel {
@@ -209,7 +206,7 @@ form.sign-in-form {
 }
 
 .panel .content {
-  color: #ffffff;
+  color: #fff;
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
@@ -241,7 +238,6 @@ form.sign-in-form {
 }
 
 /* ANIMATION */
-
 .container.sign-up-mode:before {
   transform: translate(100%, -50%);
   right: 52%;
@@ -279,11 +275,30 @@ form.sign-in-form {
   pointer-events: all;
 }
 
+.homeBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  z-index: 7;
+}
+
+.toggle-password {
+  cursor: pointer;
+}
+
+/* Responsive Design */
 @media (max-width: 870px) {
   .container {
     min-height: 800px;
     height: 100vh;
   }
+  
   .signin-signup {
     width: 100%;
     top: 95%;
