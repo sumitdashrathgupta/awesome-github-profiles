@@ -20,75 +20,86 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // GitHub Authentication Setup
-  const GITHUB_CLIENT_ID = "your_github_client_id";
+  const GITHUB_CLIENT_ID = "Ov23liz64bw3989HVcKK";
   const BACKEND_URL = "http://localhost:3000";
 
-  // Handle GitHub OAuth
+  // GitHub auth handler
   const handleGitHubAuth = () => {
-    const params = window.location.search;
-    const urlParams = new URLSearchParams(params);
-    const code = urlParams.get("code");
-
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    
     if (code) {
-      localStorage.setItem("code", code);
-      getGhUser();
+      console.log("OAuth code received:", code);
+      getGhUser(code);
     }
   };
 
-  // Get GitHub User Data
-  const getGhUser = () => {
-    let code = localStorage.getItem("code");
-    if (!code || code === "null") return;
-
+  // Get GitHub user data
+  const getGhUser = (code) => {
+    console.log("Starting GitHub user fetch with code:", code);
+    
     fetch(`${BACKEND_URL}/api/auth/github?code=${code}`)
-      .then((res) => res.json())
-      .then((response) => {
-        let resData = response.data;
-        let token = new URLSearchParams(resData).get("access_token");
+      .then(res => {
+        console.log("Auth response status:", res.status);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(response => {
+        console.log("Auth response data:", response);
+        if (!response.data || !response.data.access_token) {
+          throw new Error('No access token received');
+        }
+        
+        const token = response.data.access_token;
+        console.log("Received access token, fetching user data");
         
         return fetch(`${BACKEND_URL}/api/auth/github/getUser`, {
           headers: {
-            Authorization: "Bearer " + token,
-          },
+            'Authorization': `Bearer ${token}`
+          }
         });
       })
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => {
+        console.log("User data response status:", res.status);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(response => {
+        console.log("User data response:", response);
+        if (!response.user) {
+          throw new Error('No user data received');
+        }
+        
         const { name, email } = response.user;
-        localStorage.setItem(
-          "user-info",
-          JSON.stringify({
-            name: name,
-            email: email,
-          })
-        );
-        localStorage.removeItem("code");
+        localStorage.setItem('user-info', JSON.stringify({ name, email }));
+        
+        // Clean up URL
+        const cleanUrl = window.location.href.split('?')[0];
+        window.history.replaceState({}, '', cleanUrl);
+        
+        // Redirect to home page
         window.location.href = "/";
       })
-      .catch((error) => {
-        console.error("GitHub auth error:", error);
+      .catch(error => {
+        console.error("Authentication error:", error);
+        alert("Failed to authenticate with GitHub. Please try again.");
       });
   };
 
-  // Handle initial auth check
-  if (localStorage.getItem("user-info")) {
-    window.location.href = "/";
-  } else if (localStorage.getItem("code")) {
-    getGhUser();
-  }
-
   // GitHub button click handlers
-  github_signIn.onclick = () => {
-    window.location.assign(
-      `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`
-    );
+  const initiateGitHubAuth = () => {
+    const authUrl = new URL('https://github.com/login/oauth/authorize');
+    authUrl.searchParams.append('client_id', GITHUB_CLIENT_ID);
+    authUrl.searchParams.append('scope', 'user');
+    window.location.href = authUrl.toString();
   };
-  
-  github_login.onclick = () => {
-    window.location.assign(
-      `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`
-    );
-  };
+
+  github_signIn.onclick = initiateGitHubAuth;
+  github_login.onclick = initiateGitHubAuth;
 
   // Email validation function
   const isValidEmail = (email) => {
@@ -125,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("rememberedUsername");
       }
       alert("Login successful!");
-      window.location.href = "index.html";
+      window.location.href = "/";
     } else {
       alert("Invalid username or password");
     }
@@ -161,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("isLoggedIn", "true");
     
     alert("Signup successful!");
-    window.location.href = "index.html";
+    window.location.href = "/";
   });
 
   // Password visibility toggle
@@ -187,5 +198,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("rememberedUsername")) {
     usernameInput.value = localStorage.getItem("rememberedUsername");
     rememberMeCheckbox.checked = true;
+  }
+
+  // Handle GitHub auth on page load
+  if (window.location.search.includes("code")) {
+    handleGitHubAuth();
   }
 });

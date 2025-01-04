@@ -1,94 +1,129 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const express =require("express");
+const express = require("express");
 const axios = require("axios");
-const cors =require("cors");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// Middleware to remove Google Chrome alert
-app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "script-src 'self'");
-  next();
-});
 
 // Middleware
 const allowedOrigins = [
   "https://recodehive.github.io/awesome-github-profiles",
   "http://127.0.0.1:5502",
+  "http://127.0.0.1:5501",
   "http://localhost:3000",
   "https://example.com"
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
-);
+// CORS configuration
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
-
-
+// Test route
 app.get("/", (req, res) => {
-  res.send("Hello from Backend!");
+  res.send("GitHub OAuth backend is running!");
 });
 
-app.get("/api/auth/github", async(req,res)=>{
- try {
-   const code = req.query.code;
-   const params = `?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`;
-   const response = await axios.post(
-     `https://github.com/login/oauth/access_token${params}`,
-     { headers: { Accept: "application/json" } }
-   );
-   res.json({data:response.data});
- } catch (error) {
-   console.log(error);
-   res.status(500).json({
-     message: "Internal Server Error",
-   });
- }
-})
-
-
-
-app.get("/api/auth/github/getUser",async(req,res)=>{
-    try {
-      req.get("Authorization");
-      const response = await axios.get("https://api.github.com/user", {
-        headers: {
-          Authorization: req.get("Authorization"),
-        },
-      });
-      const { name, email } = await response.data;
-      res.status(200).json({
-        message: "success",
-        user: {
-          name: name,
-          email: email,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: "Internal Server Error",
-      });
+// GitHub OAuth route
+app.get("/api/auth/github", async (req, res) => {
+  try {
+    const { code } = req.query;
+    
+    if (!code) {
+      return res.status(400).json({ message: "Authorization code is required" });
     }
-})
 
-// Start Server
+    console.log("Received GitHub code:", code);
+
+    const response = await axios.post(
+      'https://github.com/login/oauth/access_token',
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code: code
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    console.log("GitHub OAuth response:", response.data);
+
+    if (response.data.error) {
+      throw new Error(response.data.error_description || response.data.error);
+    }
+
+    res.json({ data: response.data });
+  } catch (error) {
+    console.error('GitHub OAuth error:', error.response?.data || error);
+    res.status(error.response?.status || 500).json({
+      message: "Failed to authenticate with GitHub",
+      error: error.message
+    });
+  }
+});
+
+// Get GitHub user data route
+app.get("/api/auth/github/getUser", async (req, res) => {
+  try {
+    const authHeader = req.get("Authorization");
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: "Invalid authorization header" });
+    }
+
+    const token = authHeader.split(' ')[1];
+    console.log("Fetching user data with token:", token.substring(0, 10) + '...');
+
+    const response = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json'
+      }
+    });
+
+    console.log("GitHub user data response:", {
+      name: response.data.name,
+      email: response.data.email
+    });
+
+    res.status(200).json({
+      message: "success",
+      user: {
+        name: response.data.name,
+        email: response.data.email
+      }
+    });
+  } catch (error) {
+    console.error('GitHub user data error:', error.response?.data || error);
+    res.status(error.response?.status || 500).json({
+      message: "Failed to fetch user data",
+      error: error.message
+    });
+  }
+});
+
+// Start server
 app.listen(port, () => {
-  console.log(
-    `Backend listening on port http://localhost:${port}`
-  );
+  console.log(`Server running at http://localhost:${port}`);
 });
