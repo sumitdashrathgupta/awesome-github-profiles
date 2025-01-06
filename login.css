@@ -40,36 +40,16 @@ input {
   z-index: 5;
 }
 
-form {
+.auth-form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0 5rem;
+  padding: 0rem 5rem;
   transition: all 0.2s 0.7s;
   overflow: hidden;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-}
-
-form.sign-up-form {
-  opacity: 0;
-  z-index: 1;
-}
-
-form.sign-in-form {
-  z-index: 2;
-}
-
-.remember-me {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  color: #333;
-}
-
-.remember-me input {
-  margin-right: 5px;
 }
 
 .github-login {
@@ -77,7 +57,7 @@ form.sign-in-form {
   background-color: transparent;
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 1rem;
   transition: transform 0.3s ease;
 }
 
@@ -88,72 +68,21 @@ form.sign-in-form {
 .title {
   font-size: 2.2rem;
   color: #444;
-  margin-bottom: 10px;
-}
-
-.input-field {
-  max-width: 380px;
-  width: 100%;
-  background-color: #f0f0f0;
-  margin: 10px 0;
-  height: 55px;
-  border-radius: 55px;
-  display: grid;
-  grid-template-columns: 15% 85%;
-  padding: 0 0.4rem;
-  position: relative;
-}
-
-.input-field i {
+  margin-bottom: 1rem;
   text-align: center;
-  line-height: 55px;
-  color: #acacac;
-  transition: 0.5s;
+}
+
+.auth-text {
+  color: #666;
   font-size: 1.1rem;
-}
-
-.input-field input {
-  background: none;
-  outline: none;
-  border: none;
-  line-height: 1;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.input-field input::placeholder {
-  color: #aaa;
-  font-weight: 500;
-}
-
-.social-text {
-  padding: 0.7rem 0;
-  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .social-media {
   display: flex;
   justify-content: center;
-}
-
-.btn {
-  width: 150px;
-  background-color: #000000;
-  border: none;
-  outline: none;
-  height: 49px;
-  border-radius: 49px;
-  color: #fff;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin: 10px 0;
-  cursor: pointer;
-  transition: 0.5s;
-}
-
-.btn:hover {
-  background-color: #161618;
+  margin-top: 1rem;
 }
 
 .panels-container {
@@ -189,7 +118,6 @@ form.sign-in-form {
 .panel {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: space-around;
   text-align: center;
   z-index: 6;
@@ -197,16 +125,11 @@ form.sign-in-form {
 
 .left-panel {
   pointer-events: all;
-  padding: 3rem 17% 2rem 12%;
-}
-
-.right-panel {
-  pointer-events: none;
-  padding: 3rem 12% 2rem 17%;
+  padding: 4rem 17% 2rem 12%;
 }
 
 .panel .content {
-  color: #fff;
+  color: #ffffff;
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
@@ -222,77 +145,24 @@ form.sign-in-form {
   padding: 0.7rem 0;
 }
 
-.btn.transparent {
-  margin: 0;
-  background: none;
-  border: 2px solid #fff;
-  width: 130px;
-  height: 41px;
-  font-weight: 600;
-  font-size: 0.8rem;
-}
-
-.right-panel .image,
-.right-panel .content {
-  transform: translateX(800px);
-}
-
-/* ANIMATION */
-.container.sign-up-mode:before {
-  transform: translate(100%, -50%);
-  right: 52%;
-}
-
-.container.sign-up-mode .left-panel .image,
-.container.sign-up-mode .left-panel .content {
-  transform: translateX(-800px);
-}
-
-.container.sign-up-mode .signin-signup {
-  left: 25%;
-}
-
-.container.sign-up-mode form.sign-up-form {
-  opacity: 1;
-  z-index: 2;
-}
-
-.container.sign-up-mode form.sign-in-form {
-  opacity: 0;
-  z-index: 1;
-}
-
-.container.sign-up-mode .right-panel .image,
-.container.sign-up-mode .right-panel .content {
-  transform: translateX(0%);
-}
-
-.container.sign-up-mode .left-panel {
-  pointer-events: none;
-}
-
-.container.sign-up-mode .right-panel {
-  pointer-events: all;
-}
-
 .homeBtn {
   position: absolute;
   top: 20px;
   left: 20px;
   background: #ffffff;
+  color: #ffffff;
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
   text-decoration: none;
-  z-index: 7;
+  z-index: 10;
 }
 
-.toggle-password {
-  cursor: pointer;
+.homeBtn:hover {
+  transform: scale(1.1);
 }
 
-/* Responsive Design */
 @media (max-width: 870px) {
   .container {
     min-height: 800px;
@@ -304,10 +174,6 @@ form.sign-in-form {
     top: 95%;
     transform: translate(-50%, -100%);
     transition: 1s 0.8s ease-in-out;
-  }
-
-  .signin-signup,
-  .container.sign-up-mode .signin-signup {
     left: 50%;
   }
 
@@ -322,10 +188,6 @@ form.sign-in-form {
     align-items: center;
     padding: 2.5rem 8%;
     grid-column: 1 / 2;
-  }
-
-  .right-panel {
-    grid-row: 3 / 4;
   }
 
   .left-panel {
@@ -353,12 +215,6 @@ form.sign-in-form {
     padding: 0.5rem 0;
   }
 
-  .btn.transparent {
-    width: 110px;
-    height: 35px;
-    font-size: 0.7rem;
-  }
-
   .container:before {
     width: 1500px;
     height: 1500px;
@@ -370,44 +226,24 @@ form.sign-in-form {
     transition: 2s ease-in-out;
   }
 
-  .container.sign-up-mode:before {
-    transform: translate(-50%, 100%);
-    bottom: 32%;
-    right: initial;
-  }
-
-  .container.sign-up-mode .left-panel .image,
-  .container.sign-up-mode .left-panel .content {
-    transform: translateY(-300px);
-  }
-
-  .container.sign-up-mode .right-panel .image,
-  .container.sign-up-mode .right-panel .content {
-    transform: translateY(0px);
-  }
-
-  .right-panel .image,
-  .right-panel .content {
-    transform: translateY(300px);
-  }
-
-  .container.sign-up-mode .signin-signup {
-    top: 5%;
-    transform: translate(-50%, 0);
+  .auth-form {
+    padding: 0 1.5rem;
   }
 }
 
 @media (max-width: 570px) {
-  form {
-    padding: 0 1.5rem;
+  .auth-form {
+    padding: 0 1rem;
   }
 
   .image {
     display: none;
   }
+  
   .panel .content {
     padding: 0.5rem 1rem;
   }
+  
   .container {
     padding: 1.5rem;
   }
@@ -417,26 +253,11 @@ form.sign-in-form {
     left: 50%;
   }
 
-  .container.sign-up-mode:before {
-    bottom: 28%;
-    left: 50%;
+  .title {
+    font-size: 1.8rem;
   }
-}
 
-
-
-.homeBtn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #ffffff;
-  color: #ffffff;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  text-decoration: none;
-}
-.toggle-password {
-  cursor: pointer;
+  .auth-text {
+    font-size: 1rem;
+  }
 }
